@@ -2,6 +2,7 @@ import React from "react"
 
 import Head from "next/head"
 import Link from "next/link"
+import Marquee from "react-fast-marquee"
 
 export default function Home() {
   return (
@@ -20,6 +21,10 @@ export default function Home() {
 
       <main className="flex min-h-screen justify-center bg-gradient-to-b from-gray-50 via-gray-50 to-gray-100 py-20">
         <div>
+          <Marquee>
+            I can be a React component, multiple React components, or just some
+            text.
+          </Marquee>
           <h1 className="px-5 text-center text-4xl font-bold leading-tight tracking-tight sm:mt-4 sm:text-6xl">
             Next.js
             <br />

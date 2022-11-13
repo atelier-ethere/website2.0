@@ -5,10 +5,15 @@
     "plugin:prettier/recommended"
   ],
   "rules": {
+    "prettier/prettier": [
+      "error",
+      {
+        "endOfLine": "auto",
+      }
+    ],
     "no-unused-vars": "off",
     "react/require-default-props": 0,
     "unused-imports/no-unused-imports": "error",
-    "prettier/prettier": "error",
     "@typescript-eslint/explicit-module-boundary-types": 0,
     "react/jsx-filename-extension": [1, { "extensions": [".ts", ".tsx"] }],
     "react/jsx-props-no-spreading": 0,
