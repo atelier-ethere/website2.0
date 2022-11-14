@@ -40,13 +40,11 @@ export default function Home() {
             </div>
           </div>
           <h1 className="px-5 text-center text-4xl font-bold leading-tight tracking-tight sm:mt-4 sm:text-6xl">
-            Coming
-            <br />
-            Soon
+            Coming Soon
           </h1>
 
           <h2 className="mx-auto mt-8 max-w-4xl px-10 text-center text-base tracking-tight text-gray-600 sm:text-2xl md:mt-5 md:text-2xl">
-            We are an upcoming design workshop based in Berlin.
+            an upcoming design workshop based in Berlin.
           </h2>
 
           <div className="px-4 sm:px-0">
@@ -60,7 +58,7 @@ export default function Home() {
               <div className="space-y-5 place-self-center px-4 py-24 text-center"></div>
             </section>
             <p className="mt-6 text-center text-xs font-medium text-gray-600">
-              Built by{" "}
+              © 2022{" "}
               <a
                 className="font-medium text-blue-600 transition duration-150 ease-in-out hover:text-blue-500 focus:underline focus:outline-none"
                 href="https://instagram.com/atelier.ethere"
