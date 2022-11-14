@@ -63,7 +63,7 @@ export default function Home() {
                 className="font-medium text-blue-600 transition duration-150 ease-in-out hover:text-blue-500 focus:underline focus:outline-none"
                 href="https://instagram.com/atelier.ethere"
               >
-                @atelier.ethere
+                atelier.ethere
               </a>
             </p>
           </div>
