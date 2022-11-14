@@ -19,12 +19,9 @@ export default function Home() {
 
       <main className="justify-center bg-gradient-to-b from-gray-50 via-gray-50 to-gray-100 px-0 py-0">
         <div className="marquee">
-          <Marquee pauseOnHover={true}>
+          <Marquee pauseOnHover={true} gradient={false}>
             COMING SOON +++ COMING SOON +++ COMING SOON +++ COMING SOON +++
-            COMING SOON +++ COMING SOON +++ COMING SOON +++ COMING SOON +++
-            COMING SOON +++ COMING SOON +++ COMING SOON +++ COMING SOON +++
-            COMING SOON +++ COMING SOON +++ COMING SOON +++ COMING SOON +++
-            COMING SOON +++ COMING SOON +++ COMING SOON +++ COMING SOON +++
+            COMING SOON +++ COMING SOON +++ COMING SOON +++
           </Marquee>
         </div>
         <div>
