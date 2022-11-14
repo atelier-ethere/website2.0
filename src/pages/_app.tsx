@@ -1,5 +1,7 @@
 import React from "react"
 
+/*import "../styles/logo.scss"*/
+import "../styles/marquee.scss"
 import { AppProps } from "next/app"
 import "../styles/tailwind.scss"
 
