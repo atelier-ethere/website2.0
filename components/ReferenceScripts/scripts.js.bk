@@ -1,0 +1,594 @@
+/*
+ * WEB3000 Scripts File
+ * Author: http://web3000.net
+ */
+
+/*
+ * Get Viewport Dimensions
+ * returns object with viewport dimensions to match css in width and height properties
+ * ( source: http://andylangton.co.uk/blog/development/get-viewport-size-width-and-height-javascript )
+ */
+function updateViewportDimensions() {
+  var w = window,
+    d = document,
+    e = d.documentElement,
+    g = d.getElementsByTagName("body")[0],
+    x = w.innerWidth || e.clientWidth || g.clientWidth,
+    y = w.innerHeight || e.clientHeight || g.clientHeight
+  // if(jQuery('html').hasClass('safari') && jQuery('html').hasClass('ios')) {
+  // x=$(window).width();
+  // y=$(window).height();
+  // }
+  return { width: x, height: y }
+}
+// setting the viewport width
+var viewport = updateViewportDimensions()
+
+/* Throttle Resize-triggered Events
+ * Wrap your actions in this function to throttle the frequency of firing them off, for better performance, esp. on mobile.
+ * ( source: http://stackoverflow.com/questions/2854407/javascript-jquery-window-resize-how-to-fire-after-the-resize-is-completed )
+ */
+var waitForFinalEvent = (function () {
+  var timers = {}
+  return function (callback, ms, uniqueId) {
+    if (!uniqueId) {
+      uniqueId = "Don't call this twice without a uniqueId"
+    }
+    if (timers[uniqueId]) {
+      clearTimeout(timers[uniqueId])
+    }
+    timers[uniqueId] = setTimeout(callback, ms)
+  }
+})()
+
+//////  ********************************************************************************************
+////// DOCUMENT READY *********************************************************************
+jQuery(document).ready(function ($) {
+  //	setTimeout(function() {
+  //	  debugger;
+  //	}, 3000);
+
+  Detectizr.detect({ addAllFeaturesAsClass: true })
+  var $md = new MobileDetect(window.navigator.userAgent)
+  $ipad = false
+  if ($md.tablet() == "ipad") $ipad = true
+
+  var $USER_CAN_HOVER = false
+  window.addEventListener(
+    "mouseover",
+    function onFirstHover() {
+      $USER_CAN_HOVER = true
+      $("html").addClass("hover")
+      window.removeEventListener("mouseover", onFirstHover, false)
+    },
+    false
+  )
+
+  //FastClick.attach(document.body);
+
+  var $topnav_height
+
+  ////// RESIZE FINISHED *********************************************************************
+  function calculateLayout() {
+    viewport = updateViewportDimensions()
+    vh = window.innerHeight * 0.01
+    document.documentElement.style.setProperty("--vh", vh + "px")
+
+    if (viewport.width > 1023) {
+      $("html").removeClass("ov_hidden")
+      $topnav_height = parseInt($(".top-nav li a").height())
+      $(".top-nav li a")
+        .each(function () {
+          $(this).height($topnav_height)
+        })
+        .promise()
+        .done(function () {
+          $("header nav").height($topnav_height - 1)
+        })
+
+      $(".logos-row, .logo-block").height(
+        parseInt($(".logo-block").height()) + 1
+      )
+    }
+  }
+
+  calculateLayout()
+
+  $speed = 50
+  if (viewport.width > 1023) $speed = 65
+
+  var $mq = $(".marquee").marquee({
+    //duration: 17000,
+    speed: $speed,
+    gap: 0,
+    delayBeforeStart: 0,
+    direction: "left",
+    duplicated: true,
+    startVisible: true,
+    allowCss3Support: true,
+    pauseOnHover: true,
+  })
+
+  function pauseVideos() {
+    $("video").each(function () {
+      $(this)[0].pause()
+    })
+  }
+
+  function loadInit() {
+    $(".swiper-container:not(.swiper-container-initialized)").each(function () {
+      new Swiper($(this)[0], {
+        // Optional parameters
+        init: true,
+        runCallbacksOnInit: true,
+        direction: "horizontal",
+        simulateTouch: true,
+        loop: true,
+        speed: 700,
+        spaceBetween: 10,
+        //autoHeight: true,
+        //effect: 'fade',
+
+        preloadImages: true,
+        updateOnImagesReady: true,
+        lazy: {
+          loadPrevNext: true,
+          loadPrevNextAmount: 30,
+        },
+
+        keyboard: {
+          enabled: false,
+          onlyInViewport: true,
+        },
+
+        navigation: {
+          nextEl: $(this).find(".swiper-button-next")[0],
+          prevEl: $(this).find(".swiper-button-prev")[0],
+        },
+
+        on: {
+          init: function () {
+            calculateLayout()
+            $(window).trigger("resize")
+          },
+          slideNextTransitionStart: function () {},
+          slideChange: function () {
+            $full_parent = $(this.$el)
+            $activeSlide = $full_parent.find(
+              ".swiper-slide:eq(" + this.activeIndex + ")"
+            )
+          },
+          lazyImageReady: function () {
+            $full_parent = $(this.$el)
+            $full_parent[0].swiper.update()
+          },
+        },
+      })
+    })
+
+    $(".top-layer")
+      .each(function () {
+        $(this).css("z-index", $(this).css("z-index") + 5)
+      })
+      .promise()
+      .done(function () {
+        $(window).trigger("resisze")
+      })
+  }
+  setTimeout(function () {
+    loadInit()
+  }, 50)
+
+  $(document).on("click", ".front-logo", function (e) {
+    $this = $(this)
+    $("html, body").stop().animate({ scrollTop: 0 }, 300)
+    $(".front-logo").removeClass("active")
+    $this.addClass("active")
+    pauseVideos()
+
+    if (
+      $this.hasClass("studios-logo") &&
+      $("body.home.firststart").length > 0
+    ) {
+      setTimeout(function () {
+        //$( ".front-logo" ).not($(this)).fadeOut(500);
+        $(".front-logo").not($this).hide()
+        $("body").removeClass("start opaque firststart")
+        $(".front-logo").hide()
+      }, 600)
+    } else {
+      history.pushState("", "", $this.attr("data-url"))
+      $("#content").load(
+        $this.attr("data-url") + " #inner-content",
+        function () {
+          setTimeout(function () {
+            $(".front-logo").not($this).hide()
+            $("body").removeClass("start opaque firststart")
+            $(".front-logo").hide()
+          }, 600)
+          $(".hamburger.is-active").trigger("click")
+          $("#container img").each(function (index, img) {
+            img.outerHTML = img.outerHTML
+          })
+          setTimeout(function () {
+            loadInit()
+          }, 50)
+        }
+      )
+    }
+
+    $(".top-nav li").removeClass("current-menu-item")
+    $(".top-nav li:eq(" + $this.attr("data-index") + ")").addClass(
+      "current-menu-item"
+    )
+  })
+
+  $(document).on("click", ".submenu-item-title:not(.active)", function (e) {
+    setTimeout(function () {
+      $("html, body")
+        .stop()
+        .animate({ scrollTop: $(window).scrollTop() + 600 }, 800)
+    }, 100)
+    $(this).addClass("active")
+    $(this).next().slideDown()
+  })
+
+  $(document).on("click", ".contact-close", function (e) {
+    $(".submenu-item-title").removeClass("active").addClass("no-hover")
+    $(".submenu-item-content-container").slideUp()
+    setTimeout(function () {
+      $(".submenu-item-title").removeClass("no-hover")
+    }, 1000)
+  })
+
+  $(document).on("click", ".newsletter-close", function (e) {
+    $(".newsletter-popup").removeClass("active")
+  })
+
+  $(document).on("click", ".nl-link", function (e) {
+    e.preventDefault()
+    $(".newsletter-popup").addClass("active")
+  })
+
+  $(document).on("click", ".ref-link", function (e) {
+    e.preventDefault()
+    pauseVideos()
+    $scrolltime = 80
+    if ($(window).scrollTop() > 100) $scrolltime = 800
+
+    $(".front-logo").addClass("no-hover")
+    $("html, body")
+      .stop()
+      .animate({ scrollTop: 0 }, $scrolltime, function () {
+        $(".front-logo.active").show().removeClass("active")
+        $("body").addClass("start opaque home")
+        setTimeout(function () {
+          $(".front-logo").show()
+          setTimeout(function () {
+            $(".front-logo").removeClass("no-hover")
+          }, 1600)
+        }, 100)
+      })
+  })
+
+  /*$(document).on('click', ".footer-link a", function(e) {
+			e.preventDefault();
+			$this = $(this);
+			$("html, body").stop().animate({ scrollTop: 0 }, 300);
+			$( ".front-logo" ).removeClass('active');
+			history.pushState('', "", $this.attr('href'));
+				$('#content').load($this.attr('href') + ' #inner-content', function() {
+					$('#container img').each(function(index, img) {
+				    img.outerHTML = img.outerHTML;
+					});
+					setTimeout(function() {loadInit();}, 50);
+			});
+	});*/
+
+  $(document).on(
+    "click",
+    ".top-nav li:not(.current-menu-item) a",
+    function (e) {
+      if (viewport.width > 1023) {
+        e.preventDefault()
+        $index = $(this).parent("li").index()
+        $(".ref-link").trigger("click")
+        setTimeout(function () {
+          $(".front-logo:eq(" + $index + ")").trigger("click")
+        }, 1400)
+      }
+    }
+  )
+
+  $(document).on("click", ".top-nav li.current-menu-item a", function (e) {
+    e.preventDefault()
+  })
+
+  $(document).on("click", ".hamburger", function (e) {
+    $(".hamburger, header nav").toggleClass("is-active")
+  })
+
+  $(document).on("click", "video:not(.playing)", function (e) {
+    $(this).addClass("playing")
+    $(this)[0].play()
+  })
+
+  $(document).on("click", "video.playing", function (e) {
+    $(this).removeClass("playing")
+    $(this)[0].pause()
+  })
+
+  //var stickyElements = Sticksy.initializeAll('.sticky-layer')
+
+  $('a[href$=".pdf"]').attr("target", "_blank")
+
+  $("a")
+    .not('a[href^="tel"], a[href^="mailto"]')
+    .each(function () {
+      var a = new RegExp("/" + window.location.host + "/")
+      if (!a.test(this.href)) {
+        $(this).click(function (event) {
+          event.preventDefault()
+          event.stopPropagation()
+          window.open(this.href, "_blank")
+        })
+      }
+    })
+
+  //right mouse click
+  if (document.addEventListener) {
+    document.addEventListener(
+      "contextmenu",
+      function (e) {
+        //e.preventDefault();
+      },
+      false
+    )
+  } else {
+    document.attachEvent("oncontextmenu", function () {
+      //window.event.returnValue = false;
+    })
+  }
+  $("img")
+    .attr("draggable", false)
+    .attr("unselectable", "on")
+    .on("dragstart", function (event) {
+      event.preventDefault()
+      return false
+    })
+  window.ondragstart = function () {
+    return false
+  }
+
+  ///// Orientation changes
+  var mql = window.matchMedia("(orientation: portrait)")
+
+  // If there are matches, we're in portrait
+  if (mql.matches) {
+    // Portrait orientation
+  } else {
+    // Landscape orientation
+  }
+
+  // Add a media query change listener
+  mql.addListener(function (m) {
+    if (m.matches) {
+      // Changed to portrait
+      $("html").removeClass("landscape portrait").addClass("portrait")
+    } else {
+      // Changed to landscape
+      $("html").removeClass("landscape portrait").addClass("landscape")
+    }
+  })
+
+  //$(window).on('resize', _.debounce(calculateLayout, 150));
+
+  // how long to wait before deciding the resize has stopped, in ms. Around 50-100 should work ok.
+  var timeToWaitForLast = 150
+  $(window).resize(function () {
+    waitForFinalEvent(
+      function () {
+        calculateLayout()
+      },
+      timeToWaitForLast,
+      "calculateLayout"
+    )
+  })
+
+  ////// DESKTOP - MOBILE DETECTION *********************************************************************
+
+  if (!$md.mobile()) {
+    // $("header").sticky({topSpacing: -1*($('header').outerHeight() - $('header nav').outerHeight() +1), zIndex: 99999})
+    // .on('sticky-start', function() { console.log("stuck");
+    // })
+    // .on('sticky-end', function() { console.log("unstuck");
+    // });
+    //////  MOBILE SCRIPTS *********************************************************************
+  } else {
+    if ($md.os() == "AndroidOS") {
+    }
+
+    $(".logo").on("click", function (e) {
+      //e.preventDefault();
+    })
+
+    if ($ipad) {
+    } else {
+    }
+  }
+
+  /** DEVELOPEMENT SNIPPETS **/
+  $(window).bind("load", function () {
+    // Get on screen image
+    //var screenImage = $(".soliloquy-image:first-child");
+    // Create new offscreen image to test
+    // var theImage = new Image();
+    // theImage.src = screenImage.attr("src");
+    // Get accurate measurements from that.
+    // var imageWidth = theImage.width;
+    // var imageHeight = theImage.height;
+    //alert(imageWidth);
+  })
+
+  //alert($('html').attr('class').split(' '));
+
+  // [].forEach.call(document.querySelectorAll("*"),function(a){a.style.outline="1px solid #"+(~~(Math.random()*(1<<24))).toString(16)})
+
+  if (!$("html").hasClass("ie")) {
+    /*! instant.page v5.1.0 - (C) 2019-2020 Alexandre Dieulot - https://instant.page/license */
+    let t, e
+    const n = new Set(),
+      o = document.createElement("link"),
+      i =
+        o.relList &&
+        o.relList.supports &&
+        o.relList.supports("prefetch") &&
+        window.IntersectionObserver &&
+        "isIntersecting" in IntersectionObserverEntry.prototype,
+      s = "instantAllowQueryString" in document.body.dataset,
+      a = "instantAllowExternalLinks" in document.body.dataset,
+      r = "instantWhitelist" in document.body.dataset,
+      c = "instantMousedownShortcut" in document.body.dataset,
+      d = 1111
+    let l = 65,
+      u = !1,
+      f = !1,
+      m = !1
+    if ("instantIntensity" in document.body.dataset) {
+      const t = document.body.dataset.instantIntensity
+      if ("mousedown" == t.substr(0, "mousedown".length))
+        (u = !0), "mousedown-only" == t && (f = !0)
+      else if ("viewport" == t.substr(0, "viewport".length))
+        (navigator.connection &&
+          (navigator.connection.saveData ||
+            (navigator.connection.effectiveType &&
+              navigator.connection.effectiveType.includes("2g")))) ||
+          ("viewport" == t
+            ? document.documentElement.clientWidth *
+                document.documentElement.clientHeight <
+                45e4 && (m = !0)
+            : "viewport-all" == t && (m = !0))
+      else {
+        const e = parseInt(t)
+        isNaN(e) || (l = e)
+      }
+    }
+    if (i) {
+      const n = { capture: !0, passive: !0 }
+      if (
+        (f ||
+          document.addEventListener(
+            "touchstart",
+            function (t) {
+              e = performance.now()
+              const n = t.target.closest("a")
+              if (!h(n)) return
+              v(n.href)
+            },
+            n
+          ),
+        u
+          ? c ||
+            document.addEventListener(
+              "mousedown",
+              function (t) {
+                const e = t.target.closest("a")
+                if (!h(e)) return
+                v(e.href)
+              },
+              n
+            )
+          : document.addEventListener(
+              "mouseover",
+              function (n) {
+                if (performance.now() - e < d) return
+                const o = n.target.closest("a")
+                if (!h(o)) return
+                o.addEventListener("mouseout", p, { passive: !0 }),
+                  (t = setTimeout(() => {
+                    v(o.href), (t = void 0)
+                  }, l))
+              },
+              n
+            ),
+        c &&
+          document.addEventListener(
+            "mousedown",
+            function (t) {
+              if (performance.now() - e < d) return
+              const n = t.target.closest("a")
+              if (t.which > 1 || t.metaKey || t.ctrlKey) return
+              if (!n) return
+              n.addEventListener(
+                "click",
+                function (t) {
+                  1337 != t.detail && t.preventDefault()
+                },
+                { capture: !0, passive: !1, once: !0 }
+              )
+              const o = new MouseEvent("click", {
+                view: window,
+                bubbles: !0,
+                cancelable: !1,
+                detail: 1337,
+              })
+              n.dispatchEvent(o)
+            },
+            n
+          ),
+        m)
+      ) {
+        let t
+        ;(t = window.requestIdleCallback
+          ? (t) => {
+              requestIdleCallback(t, { timeout: 1500 })
+            }
+          : (t) => {
+              t()
+            })(() => {
+          const t = new IntersectionObserver((e) => {
+            e.forEach((e) => {
+              if (e.isIntersecting) {
+                const n = e.target
+                t.unobserve(n), v(n.href)
+              }
+            })
+          })
+          document.querySelectorAll("a").forEach((e) => {
+            h(e) && t.observe(e)
+          })
+        })
+      }
+    }
+    function p(e) {
+      ;(e.relatedTarget &&
+        e.target.closest("a") == e.relatedTarget.closest("a")) ||
+        (t && (clearTimeout(t), (t = void 0)))
+    }
+    function h(t) {
+      if (
+        t &&
+        t.href &&
+        (!r || "instant" in t.dataset) &&
+        (a || t.origin == location.origin || "instant" in t.dataset) &&
+        ["http:", "https:"].includes(t.protocol) &&
+        ("http:" != t.protocol || "https:" != location.protocol) &&
+        (s || !t.search || "instant" in t.dataset) &&
+        !(
+          (t.hash &&
+            t.pathname + t.search == location.pathname + location.search) ||
+          "noInstant" in t.dataset
+        )
+      )
+        return !0
+    }
+    function v(t) {
+      if (n.has(t)) return
+      const e = document.createElement("link")
+      ;(e.rel = "prefetch"),
+        (e.href = t),
+        document.head.appendChild(e),
+        n.add(t)
+    }
+  }
+})
