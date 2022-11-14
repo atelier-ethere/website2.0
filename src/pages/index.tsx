@@ -18,6 +18,15 @@ export default function Home() {
       </Head>
 
       <main className="justify-center bg-gradient-to-b from-gray-50 via-gray-50 to-gray-100 px-0 py-0">
+        <div className="marquee">
+          <Marquee pauseOnHover={true}>
+            COMING SOON +++ COMING SOON +++ COMING SOON +++ COMING SOON +++
+            COMING SOON +++ COMING SOON +++ COMING SOON +++ COMING SOON +++
+            COMING SOON +++ COMING SOON +++ COMING SOON +++ COMING SOON +++
+            COMING SOON +++ COMING SOON +++ COMING SOON +++ COMING SOON +++
+            COMING SOON +++ COMING SOON +++ COMING SOON +++ COMING SOON +++
+          </Marquee>
+        </div>
         <div>
           <div className="logo--active">
             <div className="logo__graphic">
@@ -34,7 +43,6 @@ export default function Home() {
               </svg>
             </div>
           </div>
-          <Marquee pauseOnHover={true}>COMING SOON</Marquee>
           <h1 className="px-5 text-center text-4xl font-bold leading-tight tracking-tight sm:mt-4 sm:text-6xl">
             Next.js
             <br />
