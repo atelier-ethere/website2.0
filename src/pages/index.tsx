@@ -1,7 +1,6 @@
 import React from "react"
 
 import Head from "next/head"
-import Link from "next/link"
 import Marquee from "react-fast-marquee"
 
 export default function Home() {
@@ -41,14 +40,13 @@ export default function Home() {
             </div>
           </div>
           <h1 className="px-5 text-center text-4xl font-bold leading-tight tracking-tight sm:mt-4 sm:text-6xl">
-            Next.js
+            Coming
             <br />
-            Advanced Starter
+            Soon
           </h1>
 
           <h2 className="mx-auto mt-8 max-w-4xl px-10 text-center text-base tracking-tight text-gray-600 sm:text-2xl md:mt-5 md:text-2xl">
-            Tailwind CSS 3.0, ESLint & Prettier without a single line of config!
-            Easily extendable zero-config template for pros and beginners.
+            We are an upcoming design workshop based in Berlin.
           </h2>
 
           <div className="px-4 sm:px-0">
@@ -58,56 +56,16 @@ export default function Home() {
                 boxShadow: "rgba(0, 0, 0, 0.12) 0px 30px 60px 0px",
               }}
             >
-              <div className="flex flex-col justify-center rounded-l-lg bg-gray-50">
-                <FeatureList>
-                  <Feature main="Tailwind CSS">
-                    Fast design workflow with <InfoText text="Tailwind CSS" />
-                  </Feature>
-
-                  <Feature main="TypeScript">
-                    <InfoText text="TypeScript" /> by default
-                  </Feature>
-
-                  <Feature main="ESLint config">
-                    Customizable <InfoText text="ESLint config" />
-                  </Feature>
-
-                  <Feature main="Code formatting">
-                    <InfoText text="Code formatting" /> with Prettier
-                  </Feature>
-
-                  <Feature main="Absolute imports">
-                    Standardized <InfoText text="absolute imports" />
-                  </Feature>
-
-                  <Feature main="Absolute imports">
-                    Ready-to-go <InfoText text="Jest" /> setup
-                  </Feature>
-                </FeatureList>
-              </div>
-
-              <div className="space-y-5 place-self-center px-4 py-24 text-center">
-                <h3 className="text-3xl font-bold">Get it 👇</h3>
-
-                <span className="inline-flex rounded-md shadow-sm">
-                  <Link href="https://github.com/agcty/nextjs-advanced-starter">
-                    <a
-                      type="button"
-                      className="inline-flex items-center rounded-md border border-transparent bg-blue-600 px-4 py-4 font-medium leading-6 text-white transition duration-150 ease-in-out hover:bg-blue-500 focus:border-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-400 active:bg-blue-700 sm:px-10"
-                    >
-                      Copy Template from GitHub
-                    </a>
-                  </Link>
-                </span>
-              </div>
+              <div className="flex flex-col justify-center rounded-l-lg bg-gray-50"></div>
+              <div className="space-y-5 place-self-center px-4 py-24 text-center"></div>
             </section>
             <p className="mt-6 text-center text-xs font-medium text-gray-600">
               Built by{" "}
               <a
                 className="font-medium text-blue-600 transition duration-150 ease-in-out hover:text-blue-500 focus:underline focus:outline-none"
-                href="https://twitter.com/agctyz"
+                href="https://instagram.com/atelier.ethere"
               >
-                @agctyz
+                @atelier.ethere
               </a>
             </p>
           </div>
