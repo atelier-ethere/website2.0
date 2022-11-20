@@ -1,7 +1,6 @@
-Class(function PageTitleGlitch() {
+export default function PageTitleGlitch() {
   Inherit(this, Component)
   const _this = this
-  var $this
   var _line = "",
     _current = ""
   var _text = [
@@ -42,10 +41,10 @@ Class(function PageTitleGlitch() {
     "𝑇𝘩𝑒 𝑠𝑒𝑙𝑓-𝐿𝑖𝑔𝘩𝑡 𝑖𝑠 𝑣𝑖𝑟𝑡𝑢𝑎𝑙.",
     "𝑇𝘩𝑖𝑠 𝑤𝑖𝑙𝑙 𝑏𝑒𝑐𝑜𝑚𝑒 𝑡𝘩𝑒 𝑓𝑖𝑛𝑎𝑙 𝑝𝑎𝑟𝑡𝑖𝑐𝑙𝑒-𝐸𝑥𝑝𝑒𝑟𝑖𝑒𝑛𝑐𝑒.",
   ]
-  _this.name = "V I R T U A L  S E L F"
-  ;(function () {
+  _this.name = "V I R T U A L  S E L F"(function () {
     init()
     _this.startRender(loop, 2)
+    p
   })()
   function init() {
     newLine()
@@ -56,11 +55,6 @@ Class(function PageTitleGlitch() {
   function newLine() {
     _current = ""
     _line = _text.random(_text.length)
-    if (!Hydra.LOCAL)
-      console.log(
-        "%c " + _line + " ",
-        "background: #222; color: #fff;  padding: 5px;"
-      )
     clearTimeout(_this.timeout)
     autoType()
   }
@@ -79,11 +73,4 @@ Class(function PageTitleGlitch() {
   this.showAngel = function () {
     _current = "𝑎𝑛𝑔𝑒𝑙 𝑎𝑛𝑔𝑒𝑙 𝑎𝑛𝑔𝑒𝑙 𝑎𝑛𝑔𝑒𝑙 𝑎𝑛𝑔𝑒𝑙 𝑎𝑛𝑔𝑒𝑙 𝑎𝑛𝑔𝑒𝑙 𝑎𝑛𝑔𝑒𝑙 𝑎𝑛𝑔𝑒𝑙"
   }
-  this.console = function () {
-    _line = _text.random(_text.length)
-    console.log(
-      "%c " + _line + " ",
-      "background: #222; color: #fff;  padding: 5px;"
-    )
-  }
-}, "singleton")
+}

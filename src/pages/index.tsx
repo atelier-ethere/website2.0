@@ -15,6 +15,10 @@ export default function Home() {
           content="width=device-width, initial-scale=1.0, minimum-scale=1.0,maximum-scale=10.0"
         />
         <link rel="icon" href="/favicon.ico" />
+        <script
+          async
+          src="components/PageTitleGlitch/PageTitleGlitch.jsx"
+        ></script>
       </Head>
 
       <main className="justify-center bg-gradient-to-b from-gray-50 via-gray-50 to-gray-100 px-0 py-0">
@@ -36,7 +40,7 @@ export default function Home() {
         </div>
         <div>
           <div className="logo--active">
-            <div className="logo__graphic">
+            <div className="logo__graphic" style={{ padding: "2vh" }}>
               <svg
                 className="logo-svg"
                 version="1.1"
