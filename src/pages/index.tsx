@@ -29,7 +29,7 @@ export default function Home() {
           id="viewport"
           content="width=device-width, initial-scale=1.0, minimum-scale=1.0,maximum-scale=10.0"
         />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
         <script
           async
           src="components/PageTitleGlitch/PageTitleGlitch.jsx"
