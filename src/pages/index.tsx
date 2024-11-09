@@ -36,7 +36,7 @@ export default function Home() {
         ></script>
       </Head>
 
-      <main className="justify-center bg-gradient-to-b from-gray-50 via-gray-50 to-gray-100 px-0 py-0">
+      <main className="justify-center px-0 py-0">
         <div
           style={{
             borderBottom: "solid 3px #000",
