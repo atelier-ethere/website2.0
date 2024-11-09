@@ -11,25 +11,25 @@ export default function Home() {
         <link
           rel="icon"
           type="image/png"
-          href="%PUBLIC_URL%/favicon-96x96.png"
+          href="/images/favicon-96x96.png"
           sizes="96x96"
         />
-        <link rel="icon" type="image/svg+xml" href="%PUBLIC_URL%/favicon.svg" />
-        <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico" />
+        <link rel="icon" type="image/svg+xml" href="/images/favicon.svg" />
+        <link rel="shortcut icon" href="/images/favicon.ico" />
         <link
           rel="apple-touch-icon"
           sizes="180x180"
-          href="%PUBLIC_URL%/apple-touch-icon.png"
+          href="/images/apple-touch-icon.png"
         />
         <meta name="apple-mobile-web-app-title" content="ÉTHÉRÉ" />
-        <link rel="manifest" href="%PUBLIC_URL%/site.webmanifest" />
+        <link rel="manifest" href="/images/site.webmanifest" />
         <title>ÉTHÉRÉ</title>
         <meta
           name="viewport"
           id="viewport"
           content="width=device-width, initial-scale=1.0, minimum-scale=1.0,maximum-scale=10.0"
         />
-        <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+        <link rel="icon" href="/images/favicon.ico" />
         <script
           async
           src="components/PageTitleGlitch/PageTitleGlitch.jsx"
