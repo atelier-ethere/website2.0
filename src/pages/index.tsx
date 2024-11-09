@@ -58,7 +58,7 @@ export default function Home() {
             Coming Soon
           </h1>
           <h2 className="mx-auto mt-8 max-w-4xl px-10 text-center text-base tracking-tight text-gray-600 sm:text-2xl md:mt-5 md:text-2xl">
-            an upcoming design workshop based in Berlin.
+            a lifestyle studio based in Berlin.
           </h2>
         </div>
         <div>
