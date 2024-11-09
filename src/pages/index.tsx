@@ -63,7 +63,7 @@ export default function Home() {
         </div>
         <div>
           <h1>
-          <a href="mailto:info@ethere.studio">info@ethere.studio</a>
+          info@ethere.studio
           </h1>
         </div>
       </main>
